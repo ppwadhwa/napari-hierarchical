@@ -32,7 +32,8 @@ hookimpl = HookimplMarker("napari-hierarchical")
 def napari_hierarchical_get_group_reader(
     path: PathLike,
 ) -> Optional[GroupReaderFunction]:
-    if available and Path(path).suffix.lower() == ".zarr":
+    path = Path(path).suffix.lower()
+    if available and (path == ".zarr" or path == ".n5"):
         return read_zarr_group
     return None
 

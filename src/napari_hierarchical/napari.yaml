@@ -20,6 +20,9 @@ contributions:
     - id: napari-hierarchical.sample_data.pollen
       python_name: napari_hierarchical.sample_data.pollen:make_sample_data
       title: Make pollen sample data
+    - id: napari-hierarchical.sample_data.kidney
+      python_name: napari_hierarchical.sample_data.kidney:make_sample_data
+      title: Make kidney sample data
   readers:
     - command: napari-hierarchical.get_reader
       accepts_directories: false
@@ -39,3 +42,6 @@ contributions:
     - key: pollen
       display_name: 3D confocal imaging of a pollen grain (Computer Vision Group, University of Freiburg)
       command: napari-hierarchical.sample_data.pollen
+    - key: kidney
+      display_name: Kidney example
+      command: napari-hierarchical.sample_data.kidney

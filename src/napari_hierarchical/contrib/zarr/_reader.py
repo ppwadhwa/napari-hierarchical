@@ -18,7 +18,10 @@ PathLike = Union[str, os.PathLike]
 
 
 def read_zarr_group(path: PathLike) -> Group:
-    z = zarr.open(store=str(path), mode="r")
+    if Path(path).suffix == '.n5':
+        z = zarr.open(zarr.N5FSStore(path, anon=True))
+    else:
+        z = zarr.open(store=str(path), mode="r")
     if isinstance(z, zarr.Array):
         group = Group(name=Path(path).name)
         array = _read_zarr_array(str(path), [], z)
@@ -34,7 +37,13 @@ def read_zarr_group(path: PathLike) -> Group:
 def load_zarr_array(array: Array) -> None:
     if not isinstance(array, ZarrArray):
         raise ValueError(f"Not a Zarr array: {array}")
-    z = zarr.open(store=array.zarr_file, mode="r")
+
+    if Path(array.zarr_file).suffix == '.n5':
+        z = zarr.open(zarr.N5FSStore(array.zarr_file, anon=True))
+    else:
+        z = zarr.open(store=str(path), mode="r")
+
+    # z = zarr.open(store=array.zarr_file, mode="r")
     data = da.from_array(z[array.zarr_path][:])
     array.layer = Image(name=array.name, data=data)
 
