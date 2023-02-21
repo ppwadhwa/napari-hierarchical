@@ -18,7 +18,7 @@ PathLike = Union[str, os.PathLike]
 
 
 def read_zarr_group(path: PathLike) -> Group:
-    if Path(path).suffix == '.n5':
+    if Path(path).suffix == ".n5":
         z = zarr.open(zarr.N5FSStore(path, anon=True))
     else:
         z = zarr.open(store=str(path), mode="r")
@@ -38,7 +38,8 @@ def load_zarr_array(array: Array) -> None:
     if not isinstance(array, ZarrArray):
         raise ValueError(f"Not a Zarr array: {array}")
 
-    if Path(array.zarr_file).suffix == '.n5':
+    path = Path(array.zarr_file)
+    if path.suffix == ".n5":
         z = zarr.open(zarr.N5FSStore(array.zarr_file, anon=True))
     else:
         z = zarr.open(store=str(path), mode="r")
