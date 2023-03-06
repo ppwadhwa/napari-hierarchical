@@ -40,7 +40,7 @@ def load_zarr_array(array: Array) -> None:
 
     path = Path(array.zarr_file)
     if path.suffix == ".n5":
-        z = zarr.open(zarr.N5FSStore(array.zarr_file, anon=True))
+        z = zarr.open(zarr.N5FSStore(path, anon=True))
     else:
         z = zarr.open(store=str(path), mode="r")
 
